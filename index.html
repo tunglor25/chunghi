@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Thư Mời Đặc Biệt</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Quicksand:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="css/envelope.css" />
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body>
+    <div class="floating-hearts" id="floatingHearts"></div>
+
+    <div class="card-container">
+      <div class="card animate__animated animate__bounceIn" id="card">
+        <div
+          class="relative bg-black w-[850px] sm:w-[600px] group transition-all duration-700 h-[450px] flex items-center justify-center"
+        >
+          <!-- Nội dung thư -->
+          <div
+            class="transition-all flex flex-col items-center py-8 justify-start duration-300 group-hover:duration-1000 bg-white w-full h-full absolute group-hover:-translate-y-32 overflow-y-auto"
+          >
+            <h2
+              class="dancing-font text-2xl sm:text-3xl font-semibold text-gray-500 mb-4"
+            >
+              Lời Mời Đặc Biệt
+            </h2>
+
+            <div class="qr-container mb-4">
+              <img
+                src="assets/images/qr-code.png"
+                alt="QR Code"
+                class="qr-code"
+              />
+            </div>
+
+            <p class="px-6 text-sm sm:text-base text-gray-700 text-center mb-2">
+              Quét mã QR để tới bữa tiệc
+            </p>
+
+            <button class="continue-btn">Đi thôi nào</button>
+          </div>
+
+          <!-- Nút mở thư -->
+          <button
+            class="seal bg-rose-500 text-red-800 w-12 h-12 rounded-full z-40 text-sm flex items-center justify-center font-semibold [clip-path:polygon(50%_0%,_80%_10%,_100%_35%,_100%_70%,_80%_90%,_50%_100%,_20%_90%,_0%_70%,_0%_35%,_20%_10%)] group-hover:opacity-0 transition-all duration-1000 group-hover:scale-0 group-hover:rotate-180 border-4 border-rose-900"
+          >
+            MỞ
+          </button>
+
+          <!-- Các mặt của phong bì -->
+          <div
+            class="tp transition-all duration-1000 group-hover:duration-100 bg-neutral-800 absolute group-hover:[clip-path:polygon(50%_0%,_100%_0,_0_0)] w-full h-full [clip-path:polygon(50%_50%,_100%_0,_0_0)]"
+          ></div>
+          <div
+            class="lft transition-all duration-700 absolute w-full h-full bg-neutral-900 [clip-path:polygon(50%_50%,_0_0,_0_100%)]"
+          ></div>
+          <div
+            class="rgt transition-all duration-700 absolute w-full h-full bg-neutral-800 [clip-path:polygon(50%_50%,_100%_0,_100%_100%)]"
+          ></div>
+          <div
+            class="btm transition-all duration-700 absolute w-full h-full bg-neutral-900 [clip-path:polygon(50%_50%,_100%_100%,_0_100%)]"
+          ></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="js/script.js"></script>
+  </body>
+</html>

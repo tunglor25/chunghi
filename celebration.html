@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chúc Mừng Sinh Nhật!</title>
+    <link rel="stylesheet" href="css/celebration.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Thêm trong phần head -->
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/swiper@8/swiper-bundle.min.css"
+    />
+  </head>
+  <body>
+    <div class="celebration-container">
+      <div class="content-wrapper">
+        <h1 class="birthday-title">Chúc Mừng Sinh Nhật</h1>
+        <h2 id="birthday-person">Người Đặc Biệt</h2>
+
+        <div class="cake-container">
+          <div class="cake">
+            <div class="plate"></div>
+            <div class="layer layer-bottom"></div>
+            <div class="layer layer-middle"></div>
+            <div class="layer layer-top"></div>
+            <div class="icing"></div>
+
+            <div class="decoration decoration-1"></div>
+            <div class="decoration decoration-2"></div>
+            <div class="decoration decoration-3"></div>
+            <div class="decoration decoration-4"></div>
+
+            <div class="candle candle-1">
+              <div class="candle-cap"></div>
+              <div class="flame"></div>
+            </div>
+            <div class="candle candle-2">
+              <div class="candle-cap"></div>
+              <div class="flame"></div>
+            </div>
+            <div class="candle candle-3">
+              <div class="candle-cap"></div>
+              <div class="flame"></div>
+            </div>
+            <div class="candle candle-4">
+              <div class="candle-cap"></div>
+              <div class="flame"></div>
+            </div>
+          </div>
+
+          <div class="blow-instruction">Nhấn để thổi nến nào!</div>
+        </div>
+
+        <div class="photo-slider-container">
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh1.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">Khi bạn cố tỏ ra nguy hiểm</div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh3.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">
+                  Khi bạn hít khói cuộc đời mà vẫn phải mỉm cười
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh4.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">
+                  Đầu hàng cuộc sống nhưng vẫn đòi quyền lợi
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh5.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">
+                  Khi bạn uống 1 ly nhưng mặt bạn kể chuyện 10 ly
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh6.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">Chết in tại cổng trung thu</div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="assets/images/Anh7.PNG"
+                  class="image-container"
+                  alt=""
+                />
+                <div class="image-caption">
+                  Ngu mà không biết mình ngu là một dạng thiên tài
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="swiper-pagination"></div> -->
+            <!-- <div class="swiper-button-next"></div>
+            <div class="swiper-button-prev"></div> -->
+          </div>
+        </div>
+
+        <div class="wish-section  funny-mode">
+          <div class="wish-message">
+            <p>
+              Chúc bạn sinh nhật tuổi mới - càng thêm "xì tin" nhưng đừng "xì
+              teen" quá nhé!
+            </p>
+            <p class="jump">
+              Năm mới mong bạn: <br />
+              Tiền vào như nước sông Đà 💵<br />
+              Tình vào như mưa mùa hạ ❤️<br />
+              Cân nặng thì... đứng yên nhé! 🚫⚖️
+            </p>
+            <p class="spin">
+              Cứ vui chơi đi - tuổi già tính sau!<br />
+              Mãi tuổi 18 trong tim mà, đúng không? 😜<br />
+              <span class="rainbow-text">Sinh nhật zui zẻ nhaaaa!!! 🥳🎊</span>
+            </p>
+            <p>
+              Cảm ơn vì đã luôn tỏa sáng theo cách riêng của bạn. Hãy cứ mơ lớn,
+              cười nhiều và sống hết mình nhé – vì bạn xứng đáng với những điều
+              tuyệt vời nhất! 💖
+            </p>
+          </div>
+        </div>
+
+        <!-- <button class="action-button">Gửi lời chúc của bạn</button> -->
+      </div>
+
+      <div class="confetti-container" id="confetti-container"></div>
+    </div>
+
+    <!-- Audio element for birthday song -->
+    <audio id="birthday-song" loop>
+      <source src="assets/sounds/birthday.mp3" type="audio/mpeg" />
+    </audio>
+    <script src="js/celebration.js"></script>
+    <!-- Thêm trước thẻ script cuối cùng -->
+    <script src="https://unpkg.com/swiper@8/swiper-bundle.min.js"></script>
+  </body>
+</html>

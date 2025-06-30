@@ -1,0 +1,279 @@
+:root {
+            --primary-color: #ff6b8b;
+            --secondary-color: #ff8e9e;
+            --dark-color: #d23369;
+            --light-color: #fff0f3;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #fff0f3 0%, #ffd6de 100%);
+            font-family: 'Quicksand', sans-serif;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0;
+            padding: 20px;
+            overflow-x: hidden;
+        }
+        
+        .floating-hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .heart {
+            position: absolute;
+            opacity: 0.6;
+            animation: float-up 15s linear infinite;
+        }
+        
+        @keyframes float-up {
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.6;
+            }
+            90% {
+                opacity: 0.6;
+            }
+            100% {
+                transform: translateY(-100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .lock-container {
+            background: white;
+            padding: 40px;
+            border-radius: 25px;
+            box-shadow: 0 20px 40px rgba(210, 51, 105, 0.2);
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            position: relative;
+            overflow: hidden;
+            transform-style: preserve-3d;
+            transition: all 0.5s ease;
+            z-index: 1;
+        }
+        
+        .lock-container::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                to bottom right,
+                rgba(255, 107, 139, 0.1),
+                rgba(255, 142, 158, 0.3)
+            );
+            transform: rotate(30deg);
+            z-index: -1;
+            animation: gradient-shift 8s infinite alternate;
+        }
+        
+        @keyframes gradient-shift {
+            0% {
+                transform: rotate(30deg);
+            }
+            100% {
+                transform: rotate(60deg);
+            }
+        }
+        
+        .heart-lock {
+            position: relative;
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 25px;
+            transition: all 0.5s ease;
+        }
+        
+        .heart-lock img {
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(0 10px 20px rgba(210, 51, 105, 0.3));
+            transition: all 0.3s ease;
+        }
+        
+        .lock-hole {
+            position: absolute;
+            width: 24px;
+            height: 24px;
+            background: var(--dark-color);
+            border-radius: 50%;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+        
+        .lock-title {
+            font-family: 'Dancing Script', cursive;
+            color: var(--dark-color);
+            font-size: 36px;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .lock-inputs {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .lock-inputs input {
+            width: 60px;
+            height: 70px;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            border: 2px solid #f0c0c8;
+            border-radius: 15px;
+            outline: none;
+            transition: all 0.3s;
+            background-color: #fff9fa;
+            color: var(--dark-color);
+            caret-color: var(--primary-color);
+        }
+        
+        .lock-inputs input:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 15px rgba(255, 107, 139, 0.4);
+            transform: translateY(-3px);
+        }
+        
+        .unlock-btn {
+            padding: 15px 35px;
+            background: linear-gradient(to right, var(--primary-color), var(--dark-color));
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 1;
+            box-shadow: 0 8px 20px rgba(210, 51, 105, 0.3);
+            overflow: hidden;
+        }
+        
+        .unlock-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: 0.5s;
+        }
+        
+        .unlock-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 25px rgba(210, 51, 105, 0.4);
+        }
+        
+        .unlock-btn:hover::before {
+            left: 100%;
+        }
+        
+        .lock-icon {
+            font-size: 22px;
+            transition: transform 0.3s;
+        }
+        
+        .unlock-btn:hover .lock-icon {
+            transform: scale(1.2);
+        }
+        
+        .lock-message {
+            margin-top: 25px;
+            font-size: 18px;
+            font-weight: bold;
+            min-height: 30px;
+            position: relative;
+            z-index: 1;
+            transition: all 0.3s;
+        }
+        
+        /* Animations */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-8px); }
+            20%, 40%, 60%, 80% { transform: translateX(8px); }
+        }
+        
+        .shake {
+            animation: shake 0.6s;
+            border-color: var(--dark-color) !important;
+            background-color: #ffebee !important;
+        }
+        
+        @keyframes unlock {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.15); }
+            100% { transform: scale(1); }
+        }
+        
+        .unlock-success {
+            animation: unlock 0.8s ease-in-out;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Responsive */
+        @media (max-width: 480px) {
+            .lock-container {
+                padding: 30px 20px;
+            }
+            
+            .heart-lock {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .lock-title {
+                font-size: 30px;
+            }
+            
+            .lock-inputs input {
+                width: 50px;
+                height: 60px;
+                font-size: 24px;
+            }
+            
+            .unlock-btn {
+                padding: 12px 30px;
+                font-size: 16px;
+            }
+        }

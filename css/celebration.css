@@ -1,0 +1,726 @@
+/* Reset và Base */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffeef2 100%);
+  color: #333;
+  overflow-x: hidden;
+}
+
+/* Container chính */
+.celebration-container {
+  width: 100%;
+  max-width: 1400px;
+  padding: 60px 20px;
+  margin: 0 auto;
+  text-align: center;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: url("https://images.unsplash.com/photo-1530103862676-de8c9debad1d?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80")
+    no-repeat center center;
+  background-size: cover;
+  background-attachment: fixed;
+  overflow: hidden;
+}
+
+.celebration-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.85);
+  z-index: 0;
+}
+
+.content-wrapper {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+}
+
+/* Tiêu đề */
+.birthday-title {
+  font-family: "Dancing Script", cursive;
+  font-size: 5rem;
+  color: #e74c3c;
+  margin: 20px 0;
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.2);
+  animation: pulse 2s infinite;
+  position: relative;
+  display: inline-block;
+}
+
+.birthday-title::after {
+  content: "";
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 3px;
+  background: linear-gradient(to right, #e74c3c, #f39c12, #e74c3c);
+  border-radius: 3px;
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+#birthday-person {
+  font-size: 3rem;
+  color: #2c3e50;
+  margin-bottom: 30px;
+  font-family: "Dancing Script", cursive;
+  font-weight: 700;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  position: relative;
+}
+
+#birthday-person::before,
+#birthday-person::after {
+  content: "✨";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 1.5rem;
+}
+
+#birthday-person::before {
+  left: -40px;
+}
+
+#birthday-person::after {
+  right: -40px;
+}
+
+/* Bánh sinh nhật siêu cấp */
+.cake-container {
+  position: relative;
+  margin: 60px 0;
+  perspective: 1000px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.cake {
+  position: relative;
+  width: 350px;
+  height: 400px;
+  transform-style: preserve-3d;
+  animation: float 6s ease-in-out infinite;
+  z-index: 2;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0) rotate(-5deg);
+  }
+  50% {
+    transform: translateY(-30px) rotate(5deg);
+  }
+}
+
+.plate {
+  width: 400px;
+  height: 50px;
+  background: linear-gradient(to bottom, #f0f0f0, #ffffff);
+  border-radius: 50%;
+  position: absolute;
+  bottom: -25px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  z-index: 1;
+  border: 1px solid #eee;
+}
+
+.plate::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 50%;
+  background: linear-gradient(to bottom, #ffffff, #f0f0f0);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.layer {
+  position: absolute;
+  width: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+}
+
+.layer-bottom {
+  height: 120px;
+  background: linear-gradient(15deg, #f8c9d1, #f5a1b0);
+  bottom: 50px;
+  transform: translateX(-50%) rotateX(20deg);
+  z-index: 3;
+}
+
+.layer-middle {
+  height: 100px;
+  background: linear-gradient(15deg, #f5a1b0, #f2788d);
+  bottom: 170px;
+  width: 320px;
+  transform: translateX(-50%) rotateX(15deg);
+  z-index: 4;
+}
+
+.layer-top {
+  height: 80px;
+  background: linear-gradient(15deg, #f2788d, #ff6b6b);
+  bottom: 270px;
+  width: 280px;
+  transform: translateX(-50%) rotateX(10deg);
+  z-index: 5;
+}
+
+.icing {
+  position: absolute;
+  width: 280px;
+  height: 40px;
+  background: white;
+  border-radius: 20px;
+  bottom: 270px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 6;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.icing::before {
+  content: "";
+  position: absolute;
+  top: 5px;
+  left: 5px;
+  right: 5px;
+  bottom: 5px;
+  border-radius: 15px;
+  background: linear-gradient(to bottom, #ffffff, #f8f8f8);
+}
+
+.candle {
+  position: absolute;
+  width: 15px;
+  height: 80px;
+  background: linear-gradient(to right, #ffd166, #ff9a3c, #ffd166);
+  bottom: 310px;
+  z-index: 7;
+  border-radius: 8px;
+  box-shadow: 0 5px 20px rgba(255, 154, 60, 0.4);
+  transition: all 0.5s ease;
+  transform-origin: bottom center;
+}
+
+.candle-1 {
+  left: calc(50% - 70px);
+}
+.candle-2 {
+  left: calc(50% - 25px);
+}
+.candle-3 {
+  left: calc(50% + 20px);
+}
+.candle-4 {
+  left: calc(50% + 65px);
+}
+
+.flame {
+  position: absolute;
+  width: 24px;
+  height: 50px;
+  background: linear-gradient(to top, #ff9500, #ffcc00, #ffffff);
+  border-radius: 50% 50% 20% 20%;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  box-shadow: 0 0 30px #ff9500, 0 0 60px #ffcc00;
+  animation: flicker 0.8s infinite alternate;
+  z-index: 8;
+  filter: blur(1.5px);
+}
+
+@keyframes flicker {
+  0%,
+  100% {
+    transform: translateX(-50%) scale(1);
+    opacity: 1;
+  }
+  25% {
+    transform: translateX(-50%) scale(1.1, 0.9);
+  }
+  50% {
+    transform: translateX(-50%) scale(0.9, 1.1) translateY(-5px);
+  }
+  75% {
+    transform: translateX(-50%) scale(1.05);
+  }
+}
+
+.flame::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: radial-gradient(
+    circle at center,
+    rgba(255, 255, 255, 0.8) 0%,
+    transparent 70%
+  );
+  border-radius: 50%;
+}
+
+.candle-cap {
+  position: absolute;
+  width: 20px;
+  height: 5px;
+  background: #ff6b6b;
+  bottom: 80px;
+  left: 50%;
+  transform: translateX(-50%);
+  border-radius: 5px;
+  z-index: 7;
+}
+
+.decoration {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffcc00;
+  box-shadow: 0 0 10px rgba(255, 204, 0, 0.7);
+  z-index: 6;
+}
+
+.decoration-1 {
+  top: 30px;
+  left: 30px;
+  animation: sparkle 2s infinite;
+}
+
+.decoration-2 {
+  top: 20px;
+  right: 40px;
+  animation: sparkle 2s infinite 0.5s;
+}
+
+.decoration-3 {
+  bottom: 40px;
+  left: 50px;
+  animation: sparkle 2s infinite 0.7s;
+}
+
+.decoration-4 {
+  bottom: 50px;
+  right: 60px;
+  animation: sparkle 2s infinite 0.3s;
+}
+
+@keyframes sparkle {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.3);
+    opacity: 0.7;
+  }
+}
+
+.blow-instruction {
+  margin-top: 3rem;
+  font-size: 1.8rem;
+  color: #e74c3c;
+  font-weight: bold;
+  animation: bounce 2s infinite;
+  cursor: pointer;
+  padding: 10px 20px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 50px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+  position: relative;
+  z-index: 10;
+}
+
+.blow-instruction:hover {
+  background: rgba(255, 255, 255, 0.9);
+  transform: scale(1.05);
+}
+
+@keyframes bounce {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+
+/* Hiệu ứng khi thổi nến */
+.candle.blown {
+  transform: translateY(30px) rotate(-15deg);
+  opacity: 0.5;
+  background: linear-gradient(to right, #aaa, #777);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.candle.blown .flame {
+  display: none;
+}
+
+/* Slider ảnh */
+.photo-slider-container {
+  width: 100%;
+  max-width: 900px;
+  margin: 60px auto;
+  position: relative;
+}
+
+.swiper-container {
+  width: 100%;
+  height: 900px;
+  border-radius: 25px;
+  overflow: hidden;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.swiper-slide {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #000;
+}
+.image-container {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;        /* ảnh fill full */
+  object-position: center;  /* căn giữa */
+  transition: transform 0.8s;
+  display: block;           /* tránh bị inline gap */
+}
+
+.swiper-slide-active .image-container {
+  transform: scale(1.03);
+}
+
+.image-caption {
+  position: absolute;
+  bottom: 40px;
+  left: 0;
+  right: 0;
+  color: white;
+  font-size: 28px;
+  font-weight: bold;
+  text-shadow: 0 3px 8px rgba(0, 0, 0, 0.7);
+  padding: 15px 30px;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 0 0 25px 25px;
+  font-family: "Dancing Script", cursive;
+}
+
+.swiper-button-next,
+.swiper-button-prev {
+  color: white;
+  background: rgba(231, 76, 60, 0.8);
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  backdrop-filter: blur(5px);
+  transition: all 0.3s;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+}
+
+.swiper-button-next:hover,
+.swiper-button-prev:hover {
+  background: rgba(231, 76, 60, 0.95);
+  transform: scale(1.1);
+}
+
+.swiper-pagination-bullet {
+  width: 15px;
+  height: 15px;
+  background: white;
+  opacity: 0.6;
+  transition: all 0.3s;
+}
+
+.swiper-pagination-bullet-active {
+  background: #e74c3c;
+  opacity: 1;
+  transform: scale(1.3);
+}
+
+.wish-section {
+  margin: 60px auto 0 auto; /* căn giữa ngang */
+  padding: 40px;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 20px;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+  max-width: 900px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Thanh viền trên */
+.wish-section::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 10px;
+  background: linear-gradient(to right, #e74c3c, #f39c12, #e74c3c);
+}
+
+/* Nội dung lời chúc */
+.wish-message {
+  font-size: 1.8rem;
+  color: #2c3e50;
+  line-height: 1.8;
+  font-family: "Dancing Script", cursive;
+  position: relative;
+}
+
+/* Dòng chữ từng câu */
+.wish-message p {
+  margin-bottom: 20px;
+  position: relative;
+  display: inline-block;        /* căn giữa trái tim cùng dòng chữ */
+  padding-left: 30px;
+  text-align: left;             /* để chữ sau icon không bị center */
+}
+
+/* Trái tim đầu dòng */
+.wish-message p::before {
+  content: "❤";
+  position: absolute;
+  left: 0;
+  top: 0;
+  color: #e74c3c;
+  font-size: 1.4rem;
+}
+
+
+/* Confetti */
+.confetti-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 100;
+  display: none;
+}
+
+.confetti {
+  position: absolute;
+  width: 15px;
+  height: 15px;
+  opacity: 0;
+  z-index: 100;
+  animation: confetti 5s ease-in-out forwards;
+}
+
+@keyframes confetti {
+  0% {
+    transform: translateY(-100px) rotate(0deg);
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+/* Nút tương tác */
+.action-button {
+  margin-top: 40px;
+  padding: 15px 30px;
+  background: linear-gradient(to right, #e74c3c, #f39c12);
+  color: white;
+  border: none;
+  border-radius: 50px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s;
+  box-shadow: 0 10px 20px rgba(231, 76, 60, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+.action-button:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(231, 76, 60, 0.4);
+}
+
+.action-button::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent,
+    rgba(255, 255, 255, 0.3),
+    transparent
+  );
+  transition: all 0.5s;
+}
+
+.action-button:hover::before {
+  left: 100%;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .birthday-title {
+    font-size: 3.5rem;
+  }
+
+  #birthday-person {
+    font-size: 2.2rem;
+  }
+
+  .cake {
+    width: 280px;
+    height: 400px;
+  }
+
+  .plate {
+    width: 320px;
+  }
+
+  .layer-middle {
+    width: 250px;
+  }
+
+  .layer-top,
+  .icing {
+    width: 220px;
+  }
+
+  .swiper-container {
+    height: 500px;
+  }
+
+  .image-caption {
+    font-size: 20px;
+    bottom: 20px;
+  }
+
+  .wish-message {
+    font-size: 1.4rem;
+  }
+}
+.funny-mode {
+  /* background: linear-gradient(45deg, #ff9a9e, #fbc2eb, #a6c1ee, #f6d365); */
+  background-size: 300% 300%;
+  animation: gradientBG 5s ease infinite;
+  border: 3px dashed #fff;
+  font-family: 'Comic Sans MS', cursive, sans-serif;
+}
+
+@keyframes gradientBG {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.wobble {
+  animation: wobble 2s infinite;
+}
+
+@keyframes wobble {
+  0%, 100% { transform: rotate(-3deg); }
+  50% { transform: rotate(3deg); }
+}
+
+.jump {
+  animation: jump 1.5s infinite alternate;
+}
+
+@keyframes jump {
+  from { transform: translateY(0); }
+  to { transform: translateY(-10px); }
+}
+
+.spin {
+  animation: spin 4s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0); }
+  25% { transform: rotate(5deg); }
+  75% { transform: rotate(-5deg); }
+  100% { transform: rotate(0); }
+}
+
+.rainbow-text {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  font-weight: bold;
+  animation: rainbow 3s linear infinite;
+}
+
+@keyframes rainbow {
+  to { background-position: 100vw; }
+}
+
+.funny-mode .wish-message p {
+  font-size: 1.2em;
+  margin: 25px 0;
+  text-shadow: 2px 2px 0 #fff;
+}
+
+.funny-mode .wish-message {
+  padding: 20px;
+  background-color: rgba(255,255,255,0.7);
+  border-radius: 15px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.2);
+}
