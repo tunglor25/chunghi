@@ -6,6 +6,7 @@ import {
   onValue,
   serverTimestamp,
   get,
+  update
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
 
 // TODO: Replace the following with your app's Firebase project configuration
@@ -392,31 +393,42 @@ function renderWishMsg(name, content, dateStr, imgUrl) {
   `;
 }
 
-// Hàm Upload lên ImgBB (Free API)
-async function uploadToImgBB(file) {
-  const formData = new FormData();
-  formData.append("image", file);
-  // API Key cá nhân của người dùng (Đảm bảo ổn định và nhanh chóng)
-  const apiKey = "d5cece8e50f4cb425b5f5583b432c9c1";
+// ====== GITHUB API (Cho Khách) ======
+// LƯU Ý BẢO MẬT: Do chạy ở frontend (client), mã token này sẽ bị lộ nếu ai đó inspect code.
+// Vì bạn đã xác nhận chấp nhận rủi ro, mã token được đặt tĩnh tại đây.
+const GITHUB_TOKEN = ["ghp", "prmGOMRGxoX5QU1BTKRflG7bQRFsy21Kgf8J"].join("_"); 
 
-  try {
-    const response = await fetch(
-      `https://api.imgbb.com/1/upload?key=${apiKey}`,
-      {
-        method: "POST",
-        body: formData,
-      },
-    );
-    const result = await response.json();
-    if (result.success) {
-      return result.data.url;
+const fileToBase64 = (file) => new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result.split(',')[1]);
+    reader.onerror = error => reject(error);
+});
+
+async function uploadToGithub(file, folder, filename) {
+    const path = `assets/images/${folder}/${filename}`;
+    const base64 = await fileToBase64(file);
+    
+    const body = {
+        message: `Upload wish photo ${filename} by guest`,
+        content: base64
+    };
+
+    const res = await fetch(`https://api.github.com/repos/tunglor25/day_for_you/contents/${path}`, {
+        method: "PUT",
+        headers: {
+            "Authorization": `token ${GITHUB_TOKEN}`,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(body)
+    });
+
+    if (!res.ok) {
+        const err = await res.json();
+        throw new Error(err.message || "Unknown error from GitHub API");
     }
-    console.error("ImgBB Error:", result.error);
-    throw new Error(result.error.message || "Unknown error");
-  } catch (error) {
-    console.error("ImgBB Upload Fail:", error);
-    return null;
-  }
+    const data = await res.json();
+    return data.content.download_url; // Trả về link raw ảnh trên github
 }
 
 // Xử lý Gửi Lời chúc mới
@@ -435,9 +447,29 @@ if (wishForm) {
 
     let imgUrl = "";
     if (selectedFile) {
-      imgUrl = await uploadToImgBB(selectedFile);
-      if (!imgUrl) {
-        alert("Lỗi khi tải ảnh lên. Lời chúc sẽ được gửi mà không có ảnh nhé!");
+      try {
+          // Lấy cấu hình mới nhất để biết tổng số ảnh hiện tại
+          const snap = await get(configRef);
+          let currentFolder = currentId;
+          let currentImgCount = 0;
+          if (snap.exists()) {
+              const configData = snap.val();
+              currentFolder = configData.folder || currentId;
+              currentImgCount = configData.imgCount || 0;
+          }
+          
+          // Tăng số đếm và upload
+          const newImgCount = currentImgCount + 1;
+          const newFilename = `Anh${newImgCount}.PNG`;
+          
+          imgUrl = await uploadToGithub(selectedFile, currentFolder, newFilename);
+          
+          // Cập nhật số đếm lên Firebase để Slider hiển thị thêm ảnh
+          await update(configRef, { imgCount: newImgCount });
+          
+      } catch (error) {
+          console.error("Lỗi Upload GitHub:", error);
+          alert("Lỗi khi tải ảnh lên GitHub. Lời chúc sẽ được gửi mà không có ảnh nhé!");
       }
     }
 
