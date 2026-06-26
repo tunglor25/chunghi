@@ -179,28 +179,18 @@
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-              <div class="col-span-1 md:col-span-2">
+              <div class="col-span-1 md:col-span-3">
                 <label class="block text-gray-700 font-bold mb-2"
-                  >Thư Mục Ảnh Trên Nguồn</label
+                  >Chọn Ảnh Kỷ Niệm (Có thể chọn nhiều ảnh) <span class="text-red-500">*</span></label
                 >
                 <input
-                  type="text"
-                  id="cfg-folder"
-                  placeholder="VD: LAN"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 outline-none"
+                  type="file"
+                  id="cfg-images"
+                  multiple
+                  accept="image/*"
+                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 outline-none bg-white"
                 />
-              </div>
-              <div class="col-span-1">
-                <label class="block text-gray-700 font-bold mb-2">Số ảnh</label>
-                <input
-                  type="number"
-                  id="cfg-img-count"
-                  required
-                  value="6"
-                  min="3"
-                  max="100"
-                  class="w-full px-4 py-3 rounded-xl border border-gray-200 focus:border-pink-500 focus:ring-2 outline-none"
-                />
+                <p class="text-xs text-gray-500 mt-2">Ảnh sẽ tự động đổi tên thành Anh1.PNG, Anh2.PNG và lưu vào assets/images/[ID]</p>
               </div>
             </div>
 
@@ -381,24 +371,34 @@
                 </div>
                 <div>
                   <label class="text-xs font-bold text-gray-500 uppercase"
-                    >Số Ảnh</label
+                    >Số Ảnh Đang Có</label
                   >
                   <input
                     type="number"
                     id="db-img-count"
-                    class="w-full bg-white border border-gray-300 rounded px-3 py-2 mt-1"
+                    readonly
+                    class="w-full bg-gray-100 border border-gray-300 rounded px-3 py-2 mt-1 cursor-not-allowed text-gray-500 font-bold"
                   />
                 </div>
               </div>
               <div>
                 <label class="text-xs font-bold text-gray-500 uppercase"
-                  >Tên Folder Nguồn</label
+                  >Thêm Ảnh Mới (hoặc chọn thay thế toàn bộ)</label
                 >
-                <input
-                  type="text"
-                  id="db-folder"
-                  class="w-full bg-white border border-gray-300 rounded px-3 py-2 mt-1"
-                />
+                <div class="flex flex-col sm:flex-row gap-3">
+                    <input
+                      type="file"
+                      id="db-images"
+                      multiple
+                      accept="image/*"
+                      class="flex-1 bg-white border border-gray-300 rounded px-3 py-2 mt-1"
+                    />
+                    <div class="flex items-center gap-2 mt-2 sm:mt-0 p-2 bg-red-50 rounded border border-red-100 cursor-pointer" onclick="document.getElementById('db-clear-old').click()">
+                        <input type="checkbox" id="db-clear-old" class="w-4 h-4 text-red-600 bg-white border-red-300 rounded focus:ring-red-500 cursor-pointer" onclick="event.stopPropagation()">
+                        <label class="text-xs font-bold text-red-600 cursor-pointer">Xóa hết ảnh cũ</label>
+                    </div>
+                </div>
+                <p class="text-xs text-gray-400 mt-1">Nếu không tick "Xóa hết ảnh cũ", ảnh mới sẽ được chèn tiếp vào folder hiện tại.</p>
               </div>
               <div>
                 <label class="text-xs font-bold text-gray-500 uppercase"
@@ -539,22 +539,45 @@
         const id = document.getElementById("cfg-id").value.trim();
         if (!id) return showAlert("Thiếu ID!", false);
 
-        const payload = {
-          name: document.getElementById("cfg-name").value.trim(),
-          birthYear: parseInt(document.getElementById("cfg-yob").value),
-          folder: document.getElementById("cfg-folder").value.trim(),
-          imgCount: parseInt(document.getElementById("cfg-img-count").value),
-          theme: document.getElementById("cfg-theme").value,
-          timestamp: Date.now(),
-        };
+        const files = document.getElementById("cfg-images").files;
+        if (files.length === 0) return showAlert("Vui lòng chọn ít nhất 1 ảnh!", false);
+
+        showAlert("Đang upload ảnh lên máy...", true);
+
+        // Upload images using PHP
+        const formData = new FormData();
+        formData.append("folder_name", id);
+        formData.append("clear_old", "true"); // Always clear for new
+        for (let i = 0; i < files.length; i++) {
+            formData.append("images[]", files[i]);
+        }
 
         try {
+          const uploadRes = await fetch("upload.php", {
+              method: "POST",
+              body: formData
+          });
+          const uploadResult = await uploadRes.json();
+          if (!uploadResult.success) {
+              return showAlert("Lỗi Upload: " + uploadResult.message, false);
+          }
+
+          const payload = {
+            name: document.getElementById("cfg-name").value.trim(),
+            birthYear: parseInt(document.getElementById("cfg-yob").value),
+            folder: id, // Lấy ID làm tên folder
+            imgCount: uploadResult.imgCount,
+            theme: document.getElementById("cfg-theme").value,
+            timestamp: Date.now(),
+          };
+
           await set(ref(database, "celebrations/" + id), payload);
-          showAlert(`[TAB 1] Đã khởi tạo mới ID: ${id} hoàn tất!`, true);
+          showAlert(`[TAB 1] Đã khởi tạo mới ID: ${id} hoàn tất với ${uploadResult.imgCount} ảnh!`, true);
           document.getElementById("cfg-pin").value = "";
+          document.getElementById("cfg-images").value = "";
           // Không xóa form để rảnh tay Copy URL
         } catch (e) {
-          showAlert("Lỗi Firebase: " + e.message, false);
+          showAlert("Lỗi Hệ thống: " + e.message, false);
         }
       });
 
@@ -633,7 +656,6 @@
       const dName = document.getElementById("db-name");
       const dYob = document.getElementById("db-yob");
       const dCount = document.getElementById("db-img-count");
-      const dFolder = document.getElementById("db-folder");
       const dTheme = document.getElementById("db-theme");
 
       btnLoadDb.addEventListener("click", async () => {
@@ -647,8 +669,8 @@
             // Đổ data
             dName.value = data.name || "";
             dYob.value = data.birthYear || "";
-            dCount.value = data.imgCount || "";
-            dFolder.value = data.folder || "";
+            dCount.value = data.imgCount || 0;
+            window.currentDbFolder = data.folder || id;
             dTheme.value = data.theme || "";
 
             dbFields.classList.remove("hidden");
@@ -675,19 +697,52 @@
           return showAlert("Mã quản trị sai!", false);
 
         const id = dbId.value.trim();
+        let finalImgCount = parseInt(dCount.value) || 0;
+        let finalFolder = window.currentDbFolder || id;
+        
+        const files = document.getElementById("db-images").files;
+        const clearOld = document.getElementById("db-clear-old").checked;
+        
+        if (files.length > 0 || clearOld) {
+            showAlert("Đang xử lý ảnh...", true);
+            const formData = new FormData();
+            formData.append("folder_name", finalFolder);
+            formData.append("clear_old", clearOld ? "true" : "false");
+            for (let i = 0; i < files.length; i++) {
+                formData.append("images[]", files[i]);
+            }
+            
+            try {
+                const uploadRes = await fetch("upload.php", {
+                    method: "POST",
+                    body: formData
+                });
+                const uploadResult = await uploadRes.json();
+                if (!uploadResult.success) {
+                    return showAlert("Lỗi Upload: " + uploadResult.message, false);
+                }
+                finalImgCount = uploadResult.imgCount;
+            } catch (err) {
+                return showAlert("Lỗi Upload: " + err.message, false);
+            }
+        }
+
         const payload = {
           name: dName.value.trim(),
           birthYear: parseInt(dYob.value),
-          imgCount: parseInt(dCount.value),
-          folder: dFolder.value.trim(),
+          imgCount: finalImgCount,
+          folder: finalFolder,
           theme: dTheme.value.trim(),
           updatedAt: Date.now(),
         };
 
         try {
           await update(ref(database, "celebrations/" + id), payload);
-          showAlert(`[TAB 3] Sửa Lỗi Database cho ${id} thành công!`, true);
+          showAlert(`[TAB 3] Sửa Lỗi DB cho ${id} thành công! (${finalImgCount} ảnh)`, true);
           document.getElementById("db-pin").value = "";
+          document.getElementById("db-images").value = "";
+          dCount.value = finalImgCount;
+          document.getElementById("db-clear-old").checked = false;
         } catch (e) {
           showAlert("Ghi DB thất bại: " + e.message, false);
         }
