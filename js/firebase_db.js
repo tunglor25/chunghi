@@ -149,25 +149,24 @@ function applyConfig(config) {
   // Load Album ẢNh kỷ niệm động
   const swiperWrapper = document.getElementById("swiper-dynamic-wrapper");
   if (swiperWrapper) {
-    let basePath = "assets/images/";
-    if (config.folder && config.folder.trim() !== "") {
-      basePath += config.folder.trim() + "/";
-    }
-
+    const folder = config.folder || "Mai_beo";
     const count = parseInt(config.imgCount) || 6;
+    const baseUrl = "https://raw.githubusercontent.com/tunglor25/day_for_you/main/assets/images";
+    const cacheBuster = config.updatedAt ? `?v=${config.updatedAt}` : `?v=${Date.now()}`;
     let slidesHTML = "";
 
     // Tạo danh sách ảnh
     for (let i = 1; i <= count; i++) {
+      let imgSrc = `${baseUrl}/${folder}/Anh${i}.PNG${cacheBuster}`;
       slidesHTML += `
           <div class="swiper-slide overflow-hidden rounded-3xl">
             <div class="absolute inset-0 bg-black/10 z-0"></div>
             <!-- Lớp nền mờ (Blurred Background) -->
-            <img src="${basePath}Anh${i}.PNG" class="absolute inset-0 w-full h-full object-cover z-0 blur-xl opacity-50 scale-110" 
-                 onerror="this.onerror=null; this.src='${basePath}Anh${i}.jpg'; this.onerror=function(){this.onerror=null; this.src='${basePath}Anh${i}.jpeg'; this.onerror=function(){this.src='https://loremflickr.com/600/400/birthday,cake';};};" />
+            <img src="${imgSrc}" class="absolute inset-0 w-full h-full object-cover z-0 blur-xl opacity-50 scale-110" 
+                 onerror="this.src='https://loremflickr.com/600/400/birthday,cake';" />
             <!-- Lớp ảnh chính sắc nét (Sharp Foreground) kèm tính năng Phóng To Popup -->
-            <img src="${basePath}Anh${i}.PNG" class="relative z-10 w-full h-full object-contain drop-shadow-2xl cursor-pointer" onclick="if(window.openImageModal) window.openImageModal(this.src)"
-                 onerror="this.onerror=null; this.src='${basePath}Anh${i}.jpg'; this.onerror=function(){this.onerror=null; this.src='${basePath}Anh${i}.jpeg'; this.onerror=function(){this.src='https://loremflickr.com/600/400/birthday,cake';};};" />
+            <img src="${imgSrc}" class="relative z-10 w-full h-full object-contain drop-shadow-2xl cursor-pointer" onclick="if(window.openImageModal) window.openImageModal(this.src)"
+                 onerror="this.src='https://loremflickr.com/600/400/birthday,cake';" />
           </div>
         `;
     }
@@ -178,15 +177,16 @@ function applyConfig(config) {
       for (let i = 1; i <= duplicateNeeded; i++) {
         // Lấy lại ảnh theo vòng lặp bằng toán tử chia lấy dư
         let imgIndex = ((i - 1) % count) + 1;
+        let imgSrc = `${baseUrl}/${folder}/Anh${imgIndex}.PNG${cacheBuster}`;
         slidesHTML += `
           <div class="swiper-slide overflow-hidden rounded-3xl">
             <div class="absolute inset-0 bg-black/10 z-0"></div>
             <!-- Lớp nền mờ -->
-            <img src="${basePath}Anh${imgIndex}.PNG" class="absolute inset-0 w-full h-full object-cover z-0 blur-xl opacity-50 scale-110" 
-                    onerror="this.onerror=null; this.src='${basePath}Anh${imgIndex}.jpg'; this.onerror=function(){this.onerror=null; this.src='${basePath}Anh${imgIndex}.jpeg'; this.onerror=function(){this.src='https://loremflickr.com/600/400/birthday,cake';};};" />
+            <img src="${imgSrc}" class="absolute inset-0 w-full h-full object-cover z-0 blur-xl opacity-50 scale-110" 
+                    onerror="this.src='https://loremflickr.com/600/400/birthday,cake';" />
             <!-- Lớp ảnh chính kèm popup ảnh -->
-            <img src="${basePath}Anh${imgIndex}.PNG" class="relative z-10 w-full h-full object-contain drop-shadow-2xl cursor-pointer" onclick="if(window.openImageModal) window.openImageModal(this.src)"
-                    onerror="this.onerror=null; this.src='${basePath}Anh${imgIndex}.jpg'; this.onerror=function(){this.onerror=null; this.src='${basePath}Anh${imgIndex}.jpeg'; this.onerror=function(){this.src='https://loremflickr.com/600/400/birthday,cake';};};" />
+            <img src="${imgSrc}" class="relative z-10 w-full h-full object-contain drop-shadow-2xl cursor-pointer" onclick="if(window.openImageModal) window.openImageModal(this.src)"
+                    onerror="this.src='https://loremflickr.com/600/400/birthday,cake';" />
           </div>
         `;
       }
